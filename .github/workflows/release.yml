@@ -1,0 +1,73 @@
+name: Build & Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x64
+            os: ubuntu-latest
+            artifact_name: ping-app-linux-x64.tar.gz
+            output_dir: ./publish/linux-x64
+            binary_name: PingApp
+          - target: win-x64
+            os: windows-latest
+            artifact_name: ping-app-windows-x64.zip
+            output_dir: ./publish/win-x64
+            binary_name: PingApp.exe
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run Tests
+        shell: bash
+        run: |
+          dotnet test tests/PingApp.Tests/PingApp.Tests.csproj -c Release
+
+      - name: Publish Self-Contained Binary
+        shell: bash
+        run: |
+          dotnet publish src/PingApp/PingApp.csproj \
+            -c Release \
+            -r ${{ matrix.target }} \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:IncludeNativeLibrariesForSelfExtract=true \
+            -o ${{ matrix.output_dir }}
+
+      - name: Package Artifact (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          tar -czf ${{ matrix.artifact_name }} -C ${{ matrix.output_dir }} .
+
+      - name: Package Artifact (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "${{ matrix.output_dir }}/*" -DestinationPath "${{ matrix.artifact_name }}"
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'release'
+        with:
+          files: ${{ matrix.artifact_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

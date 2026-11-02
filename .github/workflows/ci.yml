@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-build:
+    name: Build & Test (.NET 10)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore PingApp.sln
+
+      - name: Build Solution
+        run: dotnet build PingApp.sln -c Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test PingApp.sln -c Release --no-build --verbosity normal

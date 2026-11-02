@@ -4,10 +4,10 @@
 
 **A high-precision, low-level network diagnostic monitor and censorship analyzer designed for Iranian internet connectivity, domestic intranet routes (NIN), international sanction blocks (Tahrim), and state-level DPI filtering.**
 
-[![Release Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=for-the-badge&logo=dotnet)](https://github.com/behdanisohrab/ping-app/releases)
+[![Release Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=for-the-badge&logo=dotnet)](https://github.com/mahziyar-azz/ping-app/releases)
 [![Framework](https://img.shields.io/badge/.NET-10.0-512BD4.svg?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/download/dotnet/10.0)
 [![UI Framework](https://img.shields.io/badge/UI-Avalonia_12-purple.svg?style=for-the-badge)](https://avaloniaui.net/)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-0078D6.svg?style=for-the-badge)](https://github.com/behdanisohrab/ping-app)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-0078D6.svg?style=for-the-badge)](https://github.com/mahziyar-azz/ping-app)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 <br/>
@@ -162,7 +162,7 @@ graph TD
 
 ### 2. Clone the Repository
 ```bash
-git clone git@github.com:behdanisohrab/ping-app.git
+git clone https://github.com/mahziyar-azz/ping-app.git
 cd ping-app
 ```
 
@@ -222,6 +222,5 @@ The original Windows-only .NET Framework 4.7.2 Windows Forms application is pres
 
 ## 📄 License & Attribution
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for full details.
-Original implementation by [Mahziyar](https://github.com/mahziyar-azz).
-Modernized and ported to .NET 10 + Avalonia by [Sohrab Behdani](https://github.com/behdanisohrab).
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for full details.  
+Maintained with ❤️ by [Mahziyar](https://github.com/mahziyar-azz).
